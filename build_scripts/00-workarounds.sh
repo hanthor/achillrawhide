@@ -17,4 +17,4 @@ mkdir -p /var/lib/alternatives
 # Enable the same compose repos during our build that the centos-bootc image
 # uses during its build.  This avoids downgrading packages in the image that
 # have strict NVR requirements.
-dnf config-manager --set-enabled baseos-compose,appstream-compose
+# dnf config-manager --set-enabled baseos-compose,appstream-compose

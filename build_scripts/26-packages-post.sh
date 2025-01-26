@@ -17,7 +17,7 @@ rm -rf /usr/share/pixmaps/faces/bluefin
 
 # The compose repos we used during the build are point in time repos that are
 # not updated, so we don't want to leave them enabled.
-dnf config-manager --set-disabled baseos-compose,appstream-compose
+# dnf config-manager --set-disabled baseos-compose,appstream-compose
 
 # Generate initramfs image after installing Bluefin branding because of Plymouth subpackage
 KERNEL_SUFFIX=""

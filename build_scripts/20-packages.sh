@@ -28,7 +28,12 @@ dnf config-manager --set-disabled tailscale-stable
 dnf -y --enablerepo tailscale-stable install \
 	tailscale
 
-dnf config-manager --add-repo "https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/centos-stream-$MAJOR_VERSION/ublue-os-staging-centos-stream-$MAJOR_VERSION.repo"
+nf config-manager --add-repo "https://pkgs.tailscale.com/stable/fedora/${MAJOR_VERSION}/tailscale.repo"
+dnf config-manager --set-disabled tailscale-stable
+dnf -y --enablerepo tailscale-stable install \
+	tailscale
+
+dnf config-manager --add-repo "https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-$MAJOR_VERSION/ublue-os-staging-fedora-$MAJOR_VERSION.repo"
 dnf config-manager --set-disabled "copr:copr.fedorainfracloud.org:ublue-os:staging"
 dnf -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:staging install \
 	-x bluefin-logos \
@@ -42,24 +47,23 @@ dnf -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:staging install \
 	ublue-fastfetch \
 	ublue-brew \
 	ublue-bling \
-	souk \
 	bluefin-*
 
-dnf -y --enablerepo "copr:copr.fedorainfracloud.org:ublue-os:staging" install uupd &&
+dnf -y --enablerepo "copr:copr.fedorainfracloud.org:ublue-os:staging" uupd &&
 	dnf -y install systemd-container
 
-dnf -y --enablerepo "copr:copr.fedorainfracloud.org:ublue-os:staging" install ublue-setup-services &&
+dnf -y --enablerepo "copr:copr.fedorainfracloud.org:ublue-os:staging" ublue-setup-services &&
 	systemctl enable check-sb-key.service
 
 dnf -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:staging swap \
-	centos-logos bluefin-logos
+	fedora-logos bluefin-logos
 
 cp -r /usr/share/ublue-os/just /tmp/just
 # Focefully install ujust without powerstat while we don't have it on EPEL
 rpm -ivh /tmp/rpms/ublue-os-just.noarch.rpm --nodeps --force
 mv /tmp/just/* /usr/share/ublue-os/just
 
-dnf config-manager --add-repo "https://copr.fedorainfracloud.org/coprs/che/nerd-fonts/repo/centos-stream-${MAJOR_VERSION}/che-nerd-fonts-centos-stream-${MAJOR_VERSION}.repo"
+dnf config-manager --add-repo "https://copr.fedorainfracloud.org/coprs/che/nerd-fonts/repo/fedora-${MAJOR_VERSION}/che-nerd-fonts-fedora-${MAJOR_VERSION}.repo"
 dnf config-manager --set-disabled copr:copr.fedorainfracloud.org:che:nerd-fonts
 dnf -y --enablerepo copr:copr.fedorainfracloud.org:che:nerd-fonts install \
 	nerd-fonts
